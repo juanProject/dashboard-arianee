@@ -13,6 +13,7 @@
         <script src="js/chart/dist/Chart.js"></script>
     </head>
     <body>
+    <div id="identities"><table></table></div>
         <script>
             const {Arianee} = ArianeeLib;
             const arianeeLib = new Arianee();
@@ -20,7 +21,43 @@
             async function initArianee(){
                 let arianee = await arianeeLib.init();
                 let wallet = arianee.fromRandomKey();
-                //wallet.
+                
+                wallet.contracts.identityContract.getPastEvents("AddressApprovedAdded", {fromBlock:0, toBlock:'latest'})
+                    .then((data) => {
+    
+                        let table = document.createElement("table");
+                        data.forEach( elem => {
+                            let tr = document.createElement("tr");
+                            let td = document.createElement("td");
+                            
+                            wallet.methods.getIdentity(elem.returnValues._newIdentity)
+                                .then( identity => {
+                                    td.innerHTML = identity.address;
+                                    tr.appendChild(td);
+                                    td.innerHTML = identity.data.companyName;
+                                    tr.appendChild(td);
+                                    if ( identity.data.pictures !== undefined ){
+                                        td.innerHTML = "<img src='" + identity.data.pictures[0].url + "'>"
+                                    } else {
+                                        td.innerHTML = 'no pictures'
+                                    }
+                                    tr.appendChild(td);
+                                    table.appendChild(tr)
+                                })
+                        });
+                        document.getElementById('identities').replaceChild(table, table)
+                })
+                /*await wallet.requestPoa()
+                    .then(i => console.log('success ' + i))
+                    .catch(i => console.log('fail '));
+                await wallet.requestAria()
+                    .then(i => console.log('success'))
+                    .catch(i => console.log('fail'));*/
+                //let argent = wallet.methods.balanceOfGas();
+                //let aria = await wallet.methods.balanceOfAria();
+                //console.log(argent);
+                //console.log(aria)
+                
                 //console.log(arianee.getIdentity(0x74a13bF9eFcD1845E5A2e932849094585AA3BCF9));
                 //console.log(await wallet.getIdentity(0x74a13bF9eFcD1845E5A2e932849094585AA3BCF9));
                 //console.log(arianee)
