@@ -28,24 +28,28 @@
                         let table = document.createElement("table");
                         data.forEach( elem => {
                             let tr = document.createElement("tr");
-                            let td = document.createElement("td");
-                            
                             wallet.methods.getIdentity(elem.returnValues._newIdentity)
                                 .then( identity => {
-                                    td.innerHTML = identity.address;
-                                    tr.appendChild(td);
-                                    td.innerHTML = identity.data.companyName;
-                                    tr.appendChild(td);
+                                    let td_address = document.createElement("td");
+                                    td_address.innerHTML = identity.address;
+                                    tr.appendChild(td_address);
+    
+                                    let td_company_name = document.createElement("td");
+                                    td_company_name.innerHTML = identity.data.companyName;
+                                    tr.appendChild(td_company_name);
+    
+                                    let td_brand_logo = document.createElement("td");
                                     if ( identity.data.pictures !== undefined ){
-                                        td.innerHTML = "<img src='" + identity.data.pictures[0].url + "'>"
+                                        td_brand_logo.innerHTML = "<img alt='"+ identity.data.companyName +" logo' src='" + identity.data.pictures[0].url + "'>"
                                     } else {
-                                        td.innerHTML = 'no pictures'
+                                        td_brand_logo.innerHTML = 'no pictures'
                                     }
-                                    tr.appendChild(td);
+                                    tr.appendChild(td_brand_logo);
                                     table.appendChild(tr)
                                 })
                         });
-                        document.getElementById('identities').replaceChild(table, table)
+                        let originTable = document.getElementById('identities').firstChild;
+                        document.getElementById('identities').replaceChild(table, originTable)
                 })
                 /*await wallet.requestPoa()
                     .then(i => console.log('success ' + i))
@@ -65,7 +69,7 @@
             initArianee()
         </script>
 
-        <canvas id="myChart" width="400" height="400"></canvas>
+        <!--<canvas id="myChart" width="400" height="400"></canvas>-->
         <script>
         var ctx = document.getElementById('myChart');
         var myChart = new Chart(ctx, {
