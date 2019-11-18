@@ -1,3 +1,40 @@
 img {
-    width: 10%
+    width: 100%
 }
+
+body{
+    background-color: #37474f;
+    color: azure;
+}
+
+.main-div {
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 3%;
+}
+
+canvas {
+    background-color: azure;
+}
+
+.bar-chart {
+    width: 49%;
+}
+
+#identities {
+    width: 49%;
+}
+
+.row {
+    width: 100%;
+}
+
+.row div {
+    display: inline-block;
+}
+
+#identities table {
+    width: 100%;
+}
+
+
