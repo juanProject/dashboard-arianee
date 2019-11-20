@@ -1,0 +1,60 @@
+body {
+    width: 100%;
+    padding: 0%;
+    margin: 0%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+img {
+    width: 100%
+}
+
+h1 {
+    margin: 0%;
+}
+
+.block {
+    display: inline-block;
+    vertical-align: middle;
+    width: 45%;
+    margin: 0% 2%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table img {
+    width: 50%;
+}
+
+td {
+    padding: 1% 2%;
+    border: 1px solid black;
+}
+
+.middle {
+    text-align: center;
+}
+
+.graph {
+    width: 90%;
+    margin: 1% auto 4%;
+}
+
+.title {
+    background-color: #37474f;
+    color: white;
+    padding: 1%;
+}
+
+.content {
+    width: 90%;
+    margin: 2% auto 0%;
+}
+
+#identities {
+    width: 100%;
+    margin-top: 15%;
+}
