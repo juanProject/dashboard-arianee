@@ -1,60 +1,60 @@
+body {
+    width: 100%;
+    padding: 0%;
+    margin: 0%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 img {
     width: 100%
 }
 
-body{
-    background-color: #37474f;
-    color: azure;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+h1 {
+    margin: 0%;
 }
 
-.main-div {
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-top: 3%;
-}
-
-canvas {
-    background-color: azure;
-}
-
-.bar-chart {
-    width: 49%;
-}
-
-#identities {
-    width: 49%;
-}
-
-.row {
-    width: 100%;
-}
-
-.row div {
+.block {
     display: inline-block;
+    vertical-align: middle;
+    width: 45%;
+    margin: 0% 2%;
 }
 
-#identities table {
+table {
     width: 100%;
-    display: block;
     border-collapse: collapse;
 }
 
-.my-custom-scrollbar {
-    position: relative;
-    height: 200px;
-    overflow: auto;
-    }
-.table-wrapper-scroll-y {
-    display: block;
+table img {
+    width: 50%;
 }
 
-#datas, #actual_certifs, #valid_identity, #nb_transactions, #token_price {
-    width: 49%;
+td {
+    padding: 1% 2%;
+    border: 1px solid black;
 }
 
+.middle {
+    text-align: center;
+}
 
+.graph {
+    width: 90%;
+    margin: 1% auto 4%;
+}
 
+.title {
+    background-color: #37474f;
+    color: white;
+    padding: 1%;
+}
 
+.content {
+    width: 90%;
+    margin: 2% auto 0%;
+}
 
-
+#identities {
+    width: 100%;
+    margin-top: 15%;
+}
