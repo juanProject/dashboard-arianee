@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Dashboard - Arianee</title>
+
+    <link rel="icon" href="img/arianee-fav-icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/mdb.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://unpkg.com/@arianee/arianeejs@latest/browser/bundle.js">
-    </script>
+    <script src="https://unpkg.com/@arianee/arianeejs@latest/browser/bundle.js"></script>
     <script src="js/chart/dist/Chart.js"></script>
 </head>
 <body>
@@ -16,9 +21,23 @@
         <h1>.Arianee Dashboard</h1>
         <div class="row"></div>
         <div class="row">
+            <div id="datas">
+                <div id="actual_certifs">
+                <p>Nombre de certificats actuels</p>
+                </div>
+                <div id="valid_identity">
+                <p>Nombre d'identités validées</p>
+                </div>
+                <div id="nb_transactions">
+                <p>Nombre de transactions</p>
+                </div>
+                <div id="token_price">
+                <p>Prix du token</p>
+                </div>
+            </div>
             <div id="identities">
                 <table></table>
-            </div>
+            </div>  
             <div class="bar-chart">
                 <canvas id="myChart" ></canvas>
             </div>
@@ -26,8 +45,10 @@
                 <canvas id="myChart2" ></canvas>
             </div>
         </div>
+
     </div>
-    
+
+
     <script>
         const {Arianee} = ArianeeLib;
         const arianeeLib = new Arianee();
@@ -162,6 +183,11 @@
         }
         initArianeeTab()
         
-    </script>
+  </script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+
 </body>
 </html>

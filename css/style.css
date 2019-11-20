@@ -5,6 +5,7 @@ img {
 body{
     background-color: #37474f;
     color: azure;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .main-div {
@@ -35,6 +36,25 @@ canvas {
 
 #identities table {
     width: 100%;
+    display: block;
+    border-collapse: collapse;
 }
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 200px;
+    overflow: auto;
+    }
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+#datas, #actual_certifs, #valid_identity, #nb_transactions, #token_price {
+    width: 49%;
+}
+
+
+
+
 
 
