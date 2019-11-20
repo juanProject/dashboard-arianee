@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Dashboard - Arianee</title>
-        <link rel="stylesheet" href="css/style.css">
-        <script src="https://unpkg.com/@arianee/arianeejs@latest/browser/bundle.js">
-        </script>
-        <script src="js/chart/dist/Chart.js"></script>
-    </head>
-    <body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Dashboard - Arianee</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/@arianee/arianeejs@latest/browser/bundle.js">
+    </script>
+    <script src="js/chart/dist/Chart.js"></script>
+</head>
+<body>
     <div class="main-div">
         <h1>.Arianee Dashboard</h1>
         <div class="row"></div>
@@ -21,6 +21,9 @@
             </div>
             <div class="bar-chart">
                 <canvas id="myChart" ></canvas>
+            </div>
+            <div class="pie-chart">
+                <canvas id="myChart2" ></canvas>
             </div>
         </div>
     </div>
@@ -34,78 +37,109 @@
             let wallet = arianee.fromRandomKey();
             
             wallet.contracts.identityContract.getPastEvents("AddressApprovedAdded", {fromBlock:0, toBlock:'latest'})
-                .then((data) => {
-
-                    let table = document.createElement("table");
-                    let tbody = document.createElement("tbody");
-                    data.forEach( elem => {
-                        let tr = document.createElement("tr");
-                        wallet.methods.getIdentity(elem.returnValues._newIdentity)
-                            .then( identity => {
-                                console.log(identity);
-                                let td_address = document.createElement("td");
-                                td_address.innerHTML = identity.address;
-                                tr.appendChild(td_address);
-
-                                let td_company_name = document.createElement("td");
-                                td_company_name.innerHTML = identity.data.companyName;
-                                tr.appendChild(td_company_name);
-
-                                let td_brand_logo = document.createElement("td");
-                                if ( identity.data.pictures !== undefined ){
-                                    td_brand_logo.innerHTML = "<img alt='"+ identity.data.companyName +" logo' src='" + identity.data.pictures[0].url + "'>"
-                                } else {
-                                    td_brand_logo.innerHTML = 'no pictures'
-                                }
-                                tr.appendChild(td_brand_logo);
-                                tbody.appendChild(tr);
-                                table.appendChild(tbody)
-                            })
-                    });
-                    let originTable = document.getElementById('identities').firstChild;
-                    document.getElementById('identities').replaceChild(table, originTable)
+            .then((data) => {
+                
+                let table = document.createElement("table");
+                let tbody = document.createElement("tbody");
+                data.forEach( elem => {
+                    let tr = document.createElement("tr");
+                    wallet.methods.getIdentity(elem.returnValues._newIdentity)
+                    .then( identity => {
+                        console.log(identity);
+                        let td_address = document.createElement("td");
+                        td_address.innerHTML = identity.address;
+                        tr.appendChild(td_address);
+                        
+                        let td_company_name = document.createElement("td");
+                        td_company_name.innerHTML = identity.data.companyName;
+                        tr.appendChild(td_company_name);
+                        
+                        let td_brand_logo = document.createElement("td");
+                        if ( identity.data.pictures !== undefined ){
+                            td_brand_logo.innerHTML = "<img alt='"+ identity.data.companyName +" logo' src='" + identity.data.pictures[0].url + "'>"
+                        } else {
+                            td_brand_logo.innerHTML = 'no pictures'
+                        }
+                        tr.appendChild(td_brand_logo);
+                        tbody.appendChild(tr);
+                        table.appendChild(tbody)
+                    })
+                });
+                let originTable = document.getElementById('identities').firstChild;
+                document.getElementById('identities').replaceChild(table, originTable)
             })
         }
         initArianee()
     </script>
     <script>
-    let ctx = document.getElementById('myChart').getContext('2d');
-    let myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
+        let ctx = document.getElementById('myChart').getContext('2d');
+        let ctxBis = document.getElementById('myChart2').getContext('2d');          
+        async function initArianeeTab(){
+            let arianee = await arianeeLib.init();
+            let wallet = arianee.fromRandomKey();
+            wallet.contracts.smartAssetContract.getPastEvents("Transfer", {fromBlock:0, toBlock:'latest'}).then((data) => {
+                wallet.contracts.smartAssetContract.getPastEvents("TokenAccessAdded", {fromBlock:0, toBlock:'latest'}).then((dataBis) => {
+                    let myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Certificates', 'Token Access', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: [data.length, dataBis.length, 3, 5, 2, 3],
+                                backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    
+                    var myLineChart = new Chart(ctxBis, {
+                        type: 'pie',
+                        data: {
+                            datasets: [{
+                                data: [data.length,dataBis.length],
+                                label: 'Dataset 1',
+                                backgroundColor: [
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                                ]
+                            }],
+                            labels: ['Transfer','Token Access']
+                        },
+                        options: {
+                            responsive: true
+                        }
+                    });
+                    
+                });
+            });
+            
         }
-    });
+        initArianeeTab()
+        
     </script>
-    </body>
+</body>
 </html>
